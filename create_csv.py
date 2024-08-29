@@ -25,7 +25,7 @@ company_urls = {
 login_url = "https://www.screener.in/login/"
 
 # Directory to save the cleaned data
-csv_file_path = os.path.join(csv_dir_path, 'profit_loss_data.csv')
+csv_dir_path = 'profit_loss_data'
 os.makedirs(csv_dir_path, exist_ok=True)
 csv_file_path = os.path.join(csv_dir_path, 'profit_loss_data.csv')
 
