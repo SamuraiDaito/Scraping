@@ -103,10 +103,10 @@ if login_response.url == "https://www.screener.in/dash/":
                 df_transposed['Company'] = company_name
                 
                 # Ensure all data is treated as strings before replacement
-                df_transposed = df_transposed.applymap(str)
+                df_transposed = df_transposed.apply(lambda x: x.map(str))
                 
                 # Clean data: Remove symbols like +, %, and , and fill NaN with 0
-                df_transposed.replace({',': '', '+': '', '%': ''}, regex=True, inplace=True)
+                df_transposed = df_transposed.apply(lambda x: x.str.replace('[,|+|%]', '', regex=True))
                 df_transposed.fillna(0, inplace=True)
 
                 # Append the company's DataFrame to the list of all data
