@@ -102,6 +102,9 @@ if login_response.url == "https://www.screener.in/dash/":
                 # Add the company name to each row
                 df_transposed['Company'] = company_name
                 
+                # Ensure all data is treated as strings before replacement
+                df_transposed = df_transposed.applymap(str)
+                
                 # Clean data: Remove symbols like +, %, and , and fill NaN with 0
                 df_transposed.replace({',': '', '+': '', '%': ''}, regex=True, inplace=True)
                 df_transposed.fillna(0, inplace=True)
