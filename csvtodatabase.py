@@ -5,7 +5,7 @@ from sqlalchemy import create_engine, text
 db_name = "concourse"
 db_user = "concourse_user"
 db_password = "concourse_pass"
-db_host = "192.168.1.233"
+db_host = "192.168.3.109"
 db_port = "5432"
 
 # Path to the CSV file
