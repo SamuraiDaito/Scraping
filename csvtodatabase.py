@@ -46,16 +46,16 @@ try:
     years_to_update = df["Year"].tolist()
 
     # Create a connection to the database
-    with engine.connect() as conn:
-        # Delete existing rows with matching years (double quotes around the column name)
-        delete_query = text('DELETE FROM relianceprofitlost WHERE "Year" IN :years')
-        conn.execute(delete_query, {'years': tuple(years_to_update)})
+    # with engine.connect() as conn:
+    #     # Delete existing rows with matching years (double quotes around the column name)
+    #     delete_query = text('DELETE FROM relianceprofitlost WHERE "Year" IN :years')
+    #     conn.execute(delete_query, {'years': tuple(years_to_update)})
 
-        # Commit the deletion operation to ensure data is cleared before new insertion
-        conn.commit()
+    #     # Commit the deletion operation to ensure data is cleared before new insertion
+    #     conn.commit()
 
     # Append the new data after deleting existing rows
-    df.to_sql('relianceprofitlost', engine, if_exists='append', index=False)
+    df.to_sql('profit_loss_oil_gas', engine, if_exists='append', index=False)
 
     print("Data inserted successfully into PostgreSQL!")
 except Exception as e:
