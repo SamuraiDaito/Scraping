@@ -76,7 +76,7 @@ if login_response.url == "https://www.screener.in/dash/":
             if table:
                 # Extract table headers (Years)
                 years = [header.get_text(strip=True) for header in table.find_all('th')]
-                
+
                 # Extract table rows (Sales, Expenses, etc.)
                 categories = []
                 data = []
@@ -92,35 +92,41 @@ if login_response.url == "https://www.screener.in/dash/":
                         row_data = [column.get_text(strip=True) for column in columns[1:]]
                         data.append(row_data)
                 
-                # Convert the list of categories and data to a DataFrame
-                df = pd.DataFrame(data, index=categories, columns=years[1:])  # Skip the first "Parameters" header
-                
-                # Transpose the DataFrame so that years become rows and categories become columns
-                df_transposed = df.transpose().reset_index()
-                df_transposed.rename(columns={'index': 'Year'}, inplace=True)
-                
-                # Add the company name to each row
-                df_transposed['Company'] = company_name
-                
-                # Ensure all data is treated as strings before replacement
-                df_transposed = df_transposed.apply(lambda x: x.map(str))
-                
-                # Clean data: Remove symbols like +, %, and , and fill NaN with 0
-                df_transposed = df_transposed.apply(lambda x: x.str.replace('[,|+|%]', '', regex=True))
-                df_transposed.fillna(0, inplace=True)
+                if data:
+                    # Convert the list of categories and data to a DataFrame
+                    df = pd.DataFrame(data, index=categories, columns=years[1:])  # Skip the first "Parameters" header
+                    
+                    # Transpose the DataFrame so that years become rows and categories become columns
+                    df_transposed = df.transpose().reset_index()
+                    df_transposed.rename(columns={'index': 'Year'}, inplace=True)
+                    
+                    # Add the company name to each row
+                    df_transposed['Company'] = company_name
+                    
+                    # Ensure all data is treated as strings before replacement
+                    df_transposed = df_transposed.apply(lambda x: x.map(str))
+                    
+                    # Clean data: Remove symbols like +, %, and , and fill NaN with 0
+                    df_transposed = df_transposed.apply(lambda x: x.str.replace('[,|+|%]', '', regex=True))
+                    df_transposed.fillna(0, inplace=True)
 
-                # Append the company's DataFrame to the list of all data
-                all_data.append(df_transposed)
+                    # Append the company's DataFrame to the list of all data
+                    all_data.append(df_transposed)
+                else:
+                    print(f"No data found in the table for {company_name}!")
             else:
                 print(f"Table not found in Profit & Loss section for {company_name}!")
         else:
             print(f"Profit & Loss section not found for {company_name}!")
 
-    # Concatenate all company data into a single DataFrame
-    final_df = pd.concat(all_data, ignore_index=True)
+    if all_data:
+        # Concatenate all company data into a single DataFrame
+        final_df = pd.concat(all_data, ignore_index=True)
 
-    # Save the concatenated DataFrame to CSV
-    final_df.to_csv(csv_file_path, index=False)
-    print(f"Data saved to {csv_file_path}")
+        # Save the concatenated DataFrame to CSV
+        final_df.to_csv(csv_file_path, index=False)
+        print(f"Data saved to {csv_file_path}")
+    else:
+        print("No data to save.")
 else:
     print("Login failed!")
