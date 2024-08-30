@@ -15,10 +15,10 @@ company_urls = {
     "BPCL": "https://www.screener.in/company/BPCL/consolidated/",
     "HINDPETRO": "https://www.screener.in/company/HINDPETRO/consolidated/",
     "GAIL": "https://www.screener.in/company/GAIL/consolidated/",
-    "IGL": "https://www.screener.in/company/IGL/consolidated/",
-    "MGL": "https://www.screener.in/company/MGL/consolidated/",
+    "IGL": "https://www.screener.in/company/IGL/",
+    "MGL": "https://www.screener.in/company/MGL/",
     "OIL": "https://www.screener.in/company/OIL/consolidated/",
-    "PETRONET": "https://www.screener.in/company/PETRONET/consolidated/"
+    "PETRONET": "https://www.screener.in/company/PETRONET/"
 }
 
 # Login URL
